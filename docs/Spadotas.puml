@@ -1,0 +1,39 @@
+@startuml espaditas
+
+class Juego
+class Jugador
+class Espada
+class Arena
+class Bamboo
+class Colisionable
+class Atravesable
+class Piso 
+class Nube
+
+
+
+Juego "1" *--  "2" Arena
+
+
+Arena "1" *-- "*" Bamboo
+Arena "1" *-- "*" Nube
+Arena "1" *-- "4" Espada
+Arena "1" *-- "1" Piso
+Arena "1" *-- "*" Jugador
+Piso "1" *-- "1" Bamboo
+
+
+Jugador o-- Bamboo
+Jugador  o-- Espada
+
+
+Bamboo <|-- Atravesable
+Nube <|-- Atravesable
+Espada <|-- Atravesable
+
+Jugador <|-- Colisionable
+Bamboo <|-- Colisionable
+Piso <|-- Colisionable
+
+
+@enduml
