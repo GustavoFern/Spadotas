@@ -1,14 +1,32 @@
 @startuml espaditas
 
-class Juego
-class Jugador
-class Espada
-class Arena
-class Bamboo
-class Colisionable
-class Atravesable
-class Piso 
-class Nube
+class Juego{
+
+}
+class Jugador{
+
+}
+class Espada{
+
+}
+class Arena{
+
+}
+class Bamboo{
+
+}
+class Colisionable{
+
+}
+class Atravesable{
+
+}
+class Piso{
+
+}
+class Nube{
+    
+}
 
 
 
