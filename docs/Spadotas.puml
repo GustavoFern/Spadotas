@@ -3,11 +3,23 @@
 class Juego{
 
 }
-class Jugador{
+class LifeBar{
 
 }
-class Espada{
-
+class Player{
+    -life : int
+    -height : int
+    -width : int
+    +TakeDamage() : int
+    +HoldSwort() : bool
+    +MoveSwort() :
+    +ThrowSword() : 
+    +Dash() :
+}
+class Sword{
+    -damage : int
+    -height : int
+    -width : int
 }
 class Arena{
 
@@ -25,7 +37,7 @@ class Piso{
 
 }
 class Nube{
-    
+
 }
 
 
@@ -35,21 +47,22 @@ Juego "1" *--  "2" Arena
 
 Arena "1" *-- "*" Bamboo
 Arena "1" *-- "*" Nube
-Arena "1" *-- "4" Espada
+Arena "1" *-- "4" Sword
 Arena "1" *-- "1" Piso
-Arena "1" *-- "*" Jugador
+Arena "1" *-- "2" Player
 Piso "1" *-- "1" Bamboo
 
 
-Jugador o-- Bamboo
-Jugador  o-- Espada
+Player o-- Bamboo
+Player "1" o-- "1" Sword
+Player "1" *-- "1" LifeBar
 
 
 Bamboo <|-- Atravesable
 Nube <|-- Atravesable
-Espada <|-- Atravesable
+Sword <|-- Atravesable
 
-Jugador <|-- Colisionable
+Player <|-- Colisionable
 Bamboo <|-- Colisionable
 Piso <|-- Colisionable
 
