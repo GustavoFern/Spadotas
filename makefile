@@ -6,7 +6,7 @@ LIB := -L/opt/local/lib
 
 
 
-SFML := -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+SFML := -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lbox2d
 
 # Obtener todos los archivos .cpp en el directorio de origen
 CPP_FILES := $(wildcard $(SRC_DIR)/*.cpp)
