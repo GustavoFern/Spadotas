@@ -3,8 +3,20 @@
 class Juego{
 
 }
-class LifeBar{
+class Menu {
+    -start : option
+    -controls : option
+    -exit : option
+    +RenderMenu() : void
+}
 
+class option {
+    
+}
+class LifeBar{
+    -height : int
+    -width : int
+    
 }
 class Player{
     -life : int
