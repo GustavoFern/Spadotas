@@ -33,7 +33,8 @@ public:
         window.draw(shape);
     }
 
-    b2Body* getBody(){
+    b2Body *getBody()
+    {
         return body;
     }
 

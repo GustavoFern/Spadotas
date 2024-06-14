@@ -42,18 +42,20 @@ Arena::Arena()
       player2(world, 800.0f, 300.0f, 50.0f, 50.0f),
       desiredSpeed(14.0f)
 {
-    window.setFramerateLimit(60);
+    // window.setFramerateLimit(60);
 
     // Configurar identificadores de usuario para los cuerpos
-    ground.getBody()->GetUserData().pointer = static_cast<uintptr_t>(2); // Identificador del suelo
+    ground.getBody()->GetUserData().pointer = static_cast<uintptr_t>(2);  // Identificador del suelo
     player1.getBody()->GetUserData().pointer = static_cast<uintptr_t>(1); // Identificador del jugador 1
     player2.getBody()->GetUserData().pointer = static_cast<uintptr_t>(3); // Identificador del jugador 2
 
     world.SetContactListener(&contactListener); // Registrar el contact listener
 }
 
-void Arena::run() {
-    while (window.isOpen()) {
+void Arena::run()
+{
+    while (window.isOpen())
+    {
         update();
         processEvents();
         render();
@@ -68,84 +70,109 @@ void Arena::processEvents()
         if (event.type == sf::Event::Closed)
             window.close();
     }
+
     // Manejar la entrada del teclado Player 1
-    
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-            player2.getBody()->ApplyLinearImpulse(
-                b2Vec2(0, 2.0f), 
-                player2.getBody()->GetWorldCenter(), 
-                true);
+        player1.getBody()->ApplyLinearImpulse(
+            b2Vec2(0, 2.0f),
+            player1.getBody()->GetWorldCenter(),
+            true);
     if (contactListener.isPlayer1OnGround())
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))//El evento al que responde
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) // El evento al que responde
             player1.getBody()->ApplyLinearImpulse(
-                b2Vec2(-0.5f, 0),//Fuerza que se aplica
+                b2Vec2(-0.5f, 0), // Fuerza que se aplica
                 player1.getBody()->GetWorldCenter(),
                 true);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))//El evento al que responde
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) // El evento al que responde
             player1.getBody()->ApplyLinearImpulse(
-                b2Vec2(0.5f, 0),//Fuerza que se aplica
+                b2Vec2(0.5f, 0), // Fuerza que se aplica
                 player1.getBody()->GetWorldCenter(),
                 true);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))//El evento al que responde
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) // El evento al que responde
             player1.getBody()->ApplyLinearImpulse(
-                b2Vec2(0, -2.0f),//Fuerza que se aplica
-                player1.getBody()->GetWorldCenter(), 
+                b2Vec2(0, -1.5f), // Fuerza que se aplica
+                player1.getBody()->GetWorldCenter(),
                 true);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && sf::Keyboard::isKeyPressed(sf::Keyboard::Right))//El evento al que responde
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) // El evento al que responde
             player1.getBody()->ApplyLinearImpulse(
-                b2Vec2(0.5f, -2.0f),//Fuerza que se aplica
-                player1.getBody()->GetWorldCenter(), 
+                b2Vec2(0.5f, -1.5f), // Fuerza que se aplica
+                player1.getBody()->GetWorldCenter(),
                 true);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && sf::Keyboard::isKeyPressed(sf::Keyboard::Left))//El evento al que responde
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) // El evento al que responde
             player1.getBody()->ApplyLinearImpulse(
-                b2Vec2(-0.5f, -2.0f),//Fuerza que se aplica
-                player1.getBody()->GetWorldCenter(), 
+                b2Vec2(-0.5f, -1.5f), // Fuerza que se aplica
+                player1.getBody()->GetWorldCenter(),
                 true);
     }
 
+    // Manejar la entrada del teclado Player 2
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        player2.getBody()->ApplyLinearImpulse(
+            b2Vec2(0, 2.0f),
+            player2.getBody()->GetWorldCenter(),
+            true);
     if (contactListener.isPlayer2OnGround())
     {
-        // Manejar la entrada del teclado Player 2
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-            player2.getBody()->ApplyLinearImpulse(b2Vec2(-0.1f, 0), player2.getBody()->GetWorldCenter(), true);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            player2.getBody()->ApplyLinearImpulse(b2Vec2(0.1f, 0), player2.getBody()->GetWorldCenter(), true);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-            player2.getBody()->ApplyLinearImpulse(b2Vec2(0, -0.1f), player2.getBody()->GetWorldCenter(), true);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-            player2.getBody()->ApplyLinearImpulse(b2Vec2(0, 0.1f), player2.getBody()->GetWorldCenter(), true);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // El evento al que responde
+            player2.getBody()->ApplyLinearImpulse(
+                b2Vec2(-0.5f, 0), // Fuerza que se aplica
+                player2.getBody()->GetWorldCenter(),
+                true);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // El evento al que responde
+            player2.getBody()->ApplyLinearImpulse(
+                b2Vec2(0.5f, 0), // Fuerza que se aplica
+                player2.getBody()->GetWorldCenter(),
+                true);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // El evento al que responde
+            player2.getBody()->ApplyLinearImpulse(
+                b2Vec2(0, -1.5f), // Fuerza que se aplica
+                player2.getBody()->GetWorldCenter(),
+                true);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // El evento al que responde
+            player2.getBody()->ApplyLinearImpulse(
+                b2Vec2(0.5f, -1.5f), // Fuerza que se aplica
+                player2.getBody()->GetWorldCenter(),
+                true);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // El evento al que responde
+            player2.getBody()->ApplyLinearImpulse(
+                b2Vec2(-0.5f, -1.5f), // Fuerza que se aplica
+                player2.getBody()->GetWorldCenter(),
+                true);
     }
 }
 
-void Arena::update() {
+void Arena::update()
+{
     // Limitar la velocidad máxima del jugador 1
     b2Vec2 velocity1 = player1.getBody()->GetLinearVelocity();
-    if (velocity1.Length() > desiredSpeed&&contactListener.isPlayer1OnGround()) {
-        velocity1.Normalize(); // Normalizar el vector de velocidad
-        velocity1 *= desiredSpeed; // Escalar la velocidad al valor máximo
+    if (velocity1.Length() > desiredSpeed && contactListener.isPlayer1OnGround())
+    {
+        velocity1.Normalize();                           // Normalizar el vector de velocidad
+        velocity1 *= desiredSpeed;                       // Escalar la velocidad al valor máximo
         player1.getBody()->SetLinearVelocity(velocity1); // Aplicar la velocidad limitada al jugador
     }
 
     // Limitar la velocidad máxima del jugador 2
-    /*b2Vec2 velocity2 = player2.getBody()->GetLinearVelocity();
-    if (velocity2.Length() > desiredSpeed) {
-        velocity2.Normalize(); // Normalizar el vector de velocidad
-        velocity2 *= desiredSpeed; // Escalar la velocidad al valor máximo
+    b2Vec2 velocity2 = player2.getBody()->GetLinearVelocity();
+    if (velocity2.Length() > desiredSpeed && contactListener.isPlayer1OnGround())
+    {
+        velocity2.Normalize();                           // Normalizar el vector de velocidad
+        velocity2 *= desiredSpeed;                       // Escalar la velocidad al valor máximo
         player2.getBody()->SetLinearVelocity(velocity2); // Aplicar la velocidad limitada al jugador
-    }*/
+    }
 
     // Avanzar la simulación de Box2D
     world.Step(1.0f / 60.0f, 6, 2);
 }
 
-void Arena::render() {
+void Arena::render()
+{
     window.clear();
 
     ground.draw(window); // Dibujar el suelo
-    LimIz.draw(window);
-    LimDer.draw(window);
-    LimSup.draw(window);
     player1.draw(window);
     player2.draw(window);
 
