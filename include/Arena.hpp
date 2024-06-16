@@ -26,6 +26,10 @@ private:
     Collidable LimSup;
     Player player1;
     Player player2;
+    sf::Texture player1Texture;
+    sf::Texture player2Texture;
+    sf::Texture fondoTexture;
+    sf::Sprite fondoSprite;
 
     float desiredSpeed;
     ContactListener contactListener;
@@ -34,15 +38,27 @@ private:
 Arena::Arena()
     : window(sf::VideoMode(1280, 720), "Spadotas"),
       world(b2Vec2(0.0f, 12.0f)),
-      ground(world, 640.0f, 635.0f, 1280.0f, 170.0f),
+      ground(world, 640.0f, 682.5f, 1280.0f, 75.0f),
       LimIz(world, 0.0f, 360.0f, 1.0f, 720.0f),
       LimDer(world, 1280.0f, 360.0f, 1.0f, 720.0f),
       LimSup(world, 640.0f, 0.0f, 1280.0f, 1.0f),
-      player1(world, 800.0f, 300.0f, 50.0f, 50.0f),
-      player2(world, 400.0f, 300.0f, 50.0f, 50.0f),
       desiredSpeed(12.0f)
 {
     window.setFramerateLimit(60);
+
+    if (!player1Texture.loadFromFile("assets/images/idle.png")) {
+        std::cout << "No se cargo correctamente";
+    }
+    if (!player2Texture.loadFromFile("assets/images/idle.png")) {
+        std::cout << "No se cargo correctamente";
+    }
+    if (!fondoTexture.loadFromFile("assets/images/arenaBackground.png")) {
+        std::cout << "No se cargó correctamente la textura del fondo" << std::endl;
+    }
+fondoSprite.setTexture(fondoTexture);
+
+    player1 = Player(world, 800.0f, 300.0f, 50.0f, 50.0f, &player1Texture),
+    player2 = Player(world, 400.0f, 300.0f, 50.0f, 50.0f, &player2Texture),
 
     // Configurar identificadores de usuario para los cuerpos
     ground.getBody()->GetUserData().pointer = static_cast<uintptr_t>(2);  // Identificador del suelo
@@ -71,6 +87,10 @@ void Arena::processEvents()
     {
         if (event.type == sf::Event::Closed)
             window.close();
+    }
+
+    if (player1.AreYouLive()||player2.AreYouLive()){
+        window.close();
     }
 
     //! Manejar la entrada del teclado Player 1
@@ -192,13 +212,13 @@ void Arena::processEvents()
     {
         if (contactListener.arePlayersInContact() && player1.isPlayerDashing())
         {
-            player2.reset(world, 200.0f, 100.0f, 50.0f, 50.0f);
+            player2.reset(world, 200.0f, 100.0f, 50.0f, 50.0f, &player2Texture);
             player2.getBody()->GetUserData().pointer = static_cast<uintptr_t>(3); // Identificador del jugador 2
         }
 
         if (contactListener.arePlayersInContact() && player2.isPlayerDashing())
         {
-            player1.reset(world, 1000.0f, 100.0f, 50.0f, 50.0f);
+            player1.reset(world, 1000.0f, 100.0f, 50.0f, 50.0f, &player1Texture);
             player1.getBody()->GetUserData().pointer = static_cast<uintptr_t>(1); // Identificador del jugador 2
         }
     }
@@ -208,10 +228,12 @@ void Arena::update()
 {
     // Avanzar la simulación de Box2D
     world.Step(1.0f / 60.0f, 6, 2);
+    player1.update(0.0f);
+    player2.update(0.0f);
 
     if (player1.isPlayerDashing())
     {
-        player1.update();
+        player1.dashState();
     }
 
     if (player1.getDashCounter() >= 2 && !player1.isPlayerDashing())
@@ -226,7 +248,7 @@ void Arena::update()
 
     if (player2.isPlayerDashing())
     {
-        player2.update();
+        player2.dashState();
     }
 
     if (player2.getDashCounter() >= 2 && !player2.isPlayerDashing())
@@ -238,16 +260,18 @@ void Arena::update()
     if(!player2.isDashAvailable()){
         player2.coolDown();
     }
+
 }
 
 void Arena::render()
 {
     window.clear();
 
+    // Dibujar el fondo (no cambia, por lo que no se actualiza)
+    window.draw(fondoSprite);
+
+    // Dibujar el frente dinámico
     ground.draw(window); // Dibujar el suelo
-    LimIz.draw(window);
-    LimDer.draw(window);
-    LimSup.draw(window);
     player1.draw(window);
     player2.draw(window);
 

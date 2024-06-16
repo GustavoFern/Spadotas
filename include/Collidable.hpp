@@ -26,7 +26,7 @@ public:
         shape.setSize(sf::Vector2f(width, height));
         shape.setOrigin(width / 2, height / 2);
         shape.setPosition(x, y);
-        shape.setFillColor(sf::Color::White);
+        shape.setFillColor(sf::Color::Transparent);
     }
     void draw(sf::RenderWindow &window)
     {

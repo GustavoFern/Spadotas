@@ -2,12 +2,15 @@
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
+#include "animation.hpp"
 
 class Player
 {
 public:
-    Player(b2World &world, float x, float y, float width, float height) : dashCounter(0), dashAvailable(true), isDashing(false)
+    Player(){}
+    Player(b2World &world, float x, float y, float width, float height, sf::Texture *texture) : dashCounter(0), lives(5), dashAvailable(true), isDashing(false)
     {
+        animation = Animation(texture,sf::Vector2u(3,2),0.3f);
         // Definir el cuerpo dinámico en Box2D
         b2BodyDef bodyDef;
         bodyDef.position.Set(x / 30.0f, y / 30.0f);
@@ -24,23 +27,31 @@ public:
         body->CreateFixture(&fixtureDef);
 
         // Definir la forma en SFML
-        shape.setSize(sf::Vector2f(width, height));
-        shape.setOrigin(width / 2, height / 2);
-        shape.setPosition(x, y);
-        shape.setFillColor(sf::Color::Red);
+        sprite.setTexture(*texture);
+        sprite.setOrigin(width / 2, height / 2);
+        sprite.setPosition(x, y);
     }
 
     //! Método para dibujar el jugador
     void draw(sf::RenderWindow &window)
     {
-        // Obtener la posición del jugador
+        // Actualizar la posición del sprite
         b2Vec2 position = body->GetPosition();
+        sprite.setPosition(position.x * 30.0f, position.y * 30.0f);
 
-        // Actualizar la posición de la forma en SFML
-        shape.setPosition(position.x * 30.0f, position.y * 30.0f);
+        // Dibujar el sprite
+        window.draw(sprite);
+    }
 
-        // Dibujar la forma
-        window.draw(shape);
+    //! Actualizador de animacion
+    void update(float deltaTime)
+    {
+        deltaTime = clock.restart().asSeconds();
+        // Actualizar la animación
+        animation.Update(0, deltaTime); // Asumiendo que la fila 0 es la animación deseada
+
+        // Actualizar el rectángulo de textura del sprite
+        sprite.setTextureRect(animation.uvRect);
     }
 
     //! Metodo para iniciar el dash
@@ -50,19 +61,20 @@ public:
         {
             isDashing = true;
             dashDurationTimer.restart(); // Iniciar el temporizador al comenzar el dash
-            //std::cout << "Dashing\n";
+            // std::cout << "Dashing\n";
         }
     }
 
     //! Metodo para iniciar el cooldawn
-    void startCoolDown(){
+    void startCoolDown()
+    {
         dashAvailable = false; // Habilitar el dash
-        dashCounter = 0;      // Reiniciar el contador
-        dashTimer.restart();  // Reiniciar el temporizador
+        dashCounter = 0;       // Reiniciar el contador
+        dashTimer.restart();   // Reiniciar el temporizador
     }
 
     //! Metodo para actualizar el estado del dash
-    void update()
+    void dashState()
     {
         if (isDashing && dashDurationTimer.getElapsedTime().asSeconds() >= 1.0f)
         {
@@ -75,7 +87,7 @@ public:
     //! Método para inicializar el temporizador del dash
     void coolDown()
     {
-        if (dashTimer.getElapsedTime().asSeconds() >= 15.0f)
+        if (dashTimer.getElapsedTime().asSeconds() >= 5.0f)
         {
             std::cout << "Dash available\n";
             dashAvailable = true; // Habilitar el dash
@@ -102,7 +114,7 @@ public:
     }
 
     //! Método para reiniciar el jugador
-    void reset(b2World &world, float x, float y, float width, float height)
+    void reset(b2World &world, float x, float y, float width, float height, sf::Texture *texture)
     {
         // Primero, destruye el cuerpo actual si existe
         if (body != nullptr)
@@ -127,16 +139,17 @@ public:
         body->CreateFixture(&fixtureDef);
 
         // Definir la forma en SFML
-        shape.setSize(sf::Vector2f(width, height));
-        shape.setOrigin(width / 2, height / 2);
-        shape.setPosition(x, y);
-        shape.setFillColor(sf::Color::Red);
+        sprite.setTexture(*texture);
+        sprite.setOrigin(width / 2, height / 2);
+        sprite.setPosition(x, y);
 
         dashCounter = 0; // Reiniciar el contador
         dashTimer.restart();
         dashDurationTimer.restart();
         dashAvailable = true;
-        isDashing =false;
+        isDashing = false;
+        lives--;
+        std::cout << lives << std::endl;
     }
 
     //! Métodos para acceder/modificar el contador y el temporizador
@@ -148,7 +161,7 @@ public:
     void increaseDashCounter()
     {
         dashCounter++;
-        //std::cout << "\nDash counter increased" << dashCounter;
+        // std::cout << "\nDash counter increased" << dashCounter;
     }
 
     bool isDashAvailable()
@@ -161,11 +174,17 @@ public:
         return isDashing;
     }
 
+    bool AreYouLive()
+    {
+        return lives == 0;
+    }
+
 private:
     b2Body *body;
-    sf::RectangleShape shape;
-    sf::Clock dashTimer, dashDurationTimer;
-    int dashCounter;
+    sf::Sprite sprite;
+    Animation animation;
+    sf::Clock dashTimer, dashDurationTimer, clock;
+    int dashCounter,lives;
     bool dashAvailable;
     bool isDashing;
 };
