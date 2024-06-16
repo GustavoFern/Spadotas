@@ -19,4 +19,4 @@ donde tener emocionantes duelos con tus amigos a duelos emocionantes con espadas
 
 ### Contribuyentes 
 Gerardo Monarrez Gallegos 23110200
-Gustavo Fernandez Flores 23110
+Gustavo Fernandez Flores 23110184

@@ -7,17 +7,19 @@
 class ContactListener : public b2ContactListener
 {
 public:
-    ContactListener() : player1OnGround(false), player2OnGround(false) {}
+    ContactListener() : player1OnGround(false), player2OnGround(false), playersInContact(false) {}
 
     void BeginContact(b2Contact *contact) override;
     void EndContact(b2Contact *contact) override;
 
     bool isPlayer1OnGround() const;
     bool isPlayer2OnGround() const;
+    bool arePlayersInContact() const;
 
 private:
     bool player1OnGround;
     bool player2OnGround;
+    bool playersInContact;
 };
 
 void ContactListener::BeginContact(b2Contact *contact)
@@ -42,6 +44,13 @@ void ContactListener::BeginContact(b2Contact *contact)
         (bodyUserDataA == static_cast<uintptr_t>(2) && bodyUserDataB == static_cast<uintptr_t>(3)))
     {
         player2OnGround = true;
+    }
+
+    if ((bodyUserDataA == static_cast<uintptr_t>(3) && bodyUserDataB == static_cast<uintptr_t>(1)) ||
+        (bodyUserDataA == static_cast<uintptr_t>(1) && bodyUserDataB == static_cast<uintptr_t>(3)))
+    {
+        //std::cout << "BeginPlayersContact\n";
+        playersInContact = true;
     }
 }
 
@@ -68,6 +77,13 @@ void ContactListener::EndContact(b2Contact *contact)
     {
         player2OnGround = false;
     }
+
+    if ((bodyUserDataA == static_cast<uintptr_t>(3) && bodyUserDataB == static_cast<uintptr_t>(1)) ||
+        (bodyUserDataA == static_cast<uintptr_t>(1) && bodyUserDataB == static_cast<uintptr_t>(3)))
+    {
+        //std::cout << "EndPlayersContact\n";
+        playersInContact = false;
+    }
 }
 
 bool ContactListener::isPlayer1OnGround() const
@@ -78,4 +94,9 @@ bool ContactListener::isPlayer1OnGround() const
 bool ContactListener::isPlayer2OnGround() const
 {
     return player2OnGround;
+}
+
+bool ContactListener::arePlayersInContact() const
+{
+    return playersInContact;
 }
