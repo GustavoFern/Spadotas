@@ -18,7 +18,7 @@ void exitFunction() {
     std::cout << "Boton salida\n";
         
         
-        menuWindow->close();
+       
         exit(0);
 }
 void controlsFunction() {
@@ -106,6 +106,7 @@ void printMenu(sf::RenderWindow* menuWindow) {
             while (!isSoundDonePlaying(startSound)) {
             // Wait for the sound to finish playing
             }
+            menuWindow->close();
             exitFunction();
         }
            
