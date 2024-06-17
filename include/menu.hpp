@@ -34,7 +34,7 @@ void printMenu(sf::RenderWindow* menuWindow) {
     Sound startSound;
     Sound controlsSound;
     //Volumen
-    menuMusic.SetVolume(30);
+    menuMusic.musicVolume(30);
 
 
     // Texturas
