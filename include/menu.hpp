@@ -3,19 +3,40 @@
 #include "Arena.hpp"
 #include "button.hpp" 
 #include <iostream>
+#include "sound.hpp"
 
-void startFunction(sf::RenderWindow* window) {
+
+class Menu {
+public:
+    void startFunction(sf::RenderWindow* window) {
+    
     Arena arena(window);
     arena.run();
 }
 void exitFunction() {
+
     std::cout << "Boton salida\n";
+        
+        
+        menuWindow->close();
+        exit(0);
 }
 void controlsFunction() {
     std::cout << "Boton controles\n";
 
 }
 void printMenu(sf::RenderWindow* menuWindow) {
+
+    
+    //Sonidos
+    Sound menuMusic;
+    menuMusic.PlayMusic("assets/sounds/menuMusic.wav");
+    Sound startSound;
+    Sound controlsSound;
+    //Volumen
+    menuMusic.SetVolume(30);
+
+
     // Texturas
     sf::Texture titleTexture;
     titleTexture.loadFromFile("assets/images/titulo.png");
@@ -27,8 +48,6 @@ void printMenu(sf::RenderWindow* menuWindow) {
     optionsButtonTexture.loadFromFile("assets/images/controlsButton.png");
     sf::Texture exitTexture;
     exitTexture.loadFromFile("assets/images/exitButton.png"); 
-
-
     sf::Texture controlsTexture;
     controlsTexture.loadFromFile("assets/images/controls.png");
     sf::Texture backButtonTexture;
@@ -64,15 +83,32 @@ void printMenu(sf::RenderWindow* menuWindow) {
 
         // Check for button clicks
         if (playButton.IsPressed(*menuWindow)) {
+            menuMusic.StopMusic();
+            startSound.PlaySound("assets/sounds/startSound.wav");
+            bool isSoundDonePlaying(const sf::Sound& startSound){
+            return startSound.getStatus() == sf::Sound::Stopped;
+            }
+            while (!isSoundDonePlaying(startSound)) {
+            // Wait for the sound to finish playing
+            }
             startFunction(menuWindow);
         }
         if (optionsButton.IsPressed(*menuWindow)) {
+            controlsSound.PlaySound("assets/sounds/controlsSound.wav");
             controlsFunction();
             inWindow = true; // Set the flag to true when controls button is pressed
         }
         if (exitButton.IsPressed(*menuWindow)) {
+            startSound.PlaySound("assets/sounds/startSound.wav");
+            bool isSoundDonePlaying(const sf::Sound& startSound){
+            return startSound.getStatus() == sf::Sound::Stopped;
+            }
+            while (!isSoundDonePlaying(startSound)) {
+            // Wait for the sound to finish playing
+            }
             exitFunction();
-            menuWindow->close();
+        }
+           
         }
 
         // Controls window
@@ -87,10 +123,11 @@ void printMenu(sf::RenderWindow* menuWindow) {
             backButton.Draw(*menuWindow);
 
             if (backButton.IsPressed(*menuWindow)) {
+                controlsSound.PlaySound("assets/sounds/controlsSound.wav");
                 inWindow = false; // Set the flag to false when back button is pressed
             }
         }
 
         menuWindow->display();
     }
-}
+};
