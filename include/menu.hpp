@@ -9,6 +9,9 @@
 class Menu {
 public:
     void startFunction(sf::RenderWindow* window) {
+        
+    Sound arenaMusic;
+    arenaMusic.Playmusic("assets/sounds/arenaMusic.wav");
     
     Arena arena(window);
     arena.run();
@@ -30,6 +33,7 @@ void printMenu(sf::RenderWindow* menuWindow) {
     
     //Sonidos
     Sound menuMusic;
+    
     menuMusic.PlayMusic("assets/sounds/menuMusic.wav");
     Sound startSound;
     Sound controlsSound;
