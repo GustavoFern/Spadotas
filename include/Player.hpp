@@ -135,7 +135,7 @@ public:
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;
         fixtureDef.density = 0.15f;
-        fixtureDef.friction = 0.9f;
+        fixtureDef.friction = 0.5f;
         body->CreateFixture(&fixtureDef);
 
         // Definir la forma en SFML

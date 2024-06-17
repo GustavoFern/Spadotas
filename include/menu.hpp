@@ -1,39 +1,38 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Arena.hpp"
 #include "button.hpp" 
 #include <iostream>
 
-void startFunction() {
-    std::cout << "Boton start\n";
+void startFunction(sf::RenderWindow* window) {
+    Arena arena(window);
+    arena.run();
 }
 void exitFunction() {
     std::cout << "Boton salida\n";
 }
 void controlsFunction() {
-
     std::cout << "Boton controles\n";
 
 }
-void printMenu() {
-    sf::RenderWindow menuWindow(sf::VideoMode(1280, 720), "Spadotas Menu");
-
+void printMenu(sf::RenderWindow* menuWindow) {
     // Texturas
     sf::Texture titleTexture;
-    titleTexture.loadFromFile("titulo.png");
+    titleTexture.loadFromFile("assets/images/titulo.png");
     sf::Texture menuBackground;
-    menuBackground.loadFromFile("fondoMenu.png");
+    menuBackground.loadFromFile("assets/images/fondoMenu.png");
     sf::Texture playButtonTexture;
-    playButtonTexture.loadFromFile("playButton.png");
+    playButtonTexture.loadFromFile("assets/images/playButton.png");
     sf::Texture optionsButtonTexture;
-    optionsButtonTexture.loadFromFile("controlsButton.png");
+    optionsButtonTexture.loadFromFile("assets/images/controlsButton.png");
     sf::Texture exitTexture;
-    exitTexture.loadFromFile("exitButton.png"); 
+    exitTexture.loadFromFile("assets/images/exitButton.png"); 
 
 
     sf::Texture controlsTexture;
-    controlsTexture.loadFromFile("controls.png");
+    controlsTexture.loadFromFile("assets/images/controls.png");
     sf::Texture backButtonTexture;
-    backButtonTexture.loadFromFile("back.png");
+    backButtonTexture.loadFromFile("assets/images/back.png");
 
 
     // Creacion de botones
@@ -44,36 +43,36 @@ void printMenu() {
 
     bool inWindow = false; // Add a flag to control the controls window
 
-    while (menuWindow.isOpen()) {
+    while (menuWindow->isOpen()) {
         sf::Event event;
-        while (menuWindow.pollEvent(event)) {
+        while (menuWindow->pollEvent(event)) {
             if (event.type == sf::Event::Closed)
-                menuWindow.close();
+                menuWindow->close();
         }
 
-        menuWindow.clear();
+        menuWindow->clear();
 
         // Dibujar fondo
         sf::RectangleShape background(sf::Vector2f(1280, 720));
         background.setTexture(&menuBackground);
-        menuWindow.draw(background);
+        menuWindow->draw(background);
 
         // Dibujar botones
-        playButton.Draw(menuWindow);
-        optionsButton.Draw(menuWindow);
-        exitButton.Draw(menuWindow);
+        playButton.Draw(*menuWindow);
+        optionsButton.Draw(*menuWindow);
+        exitButton.Draw(*menuWindow);
 
         // Check for button clicks
-        if (playButton.IsPressed(menuWindow)) {
-            startFunction();
+        if (playButton.IsPressed(*menuWindow)) {
+            startFunction(menuWindow);
         }
-        if (optionsButton.IsPressed(menuWindow)) {
+        if (optionsButton.IsPressed(*menuWindow)) {
             controlsFunction();
             inWindow = true; // Set the flag to true when controls button is pressed
         }
-        if (exitButton.IsPressed(menuWindow)) {
+        if (exitButton.IsPressed(*menuWindow)) {
             exitFunction();
-            menuWindow.close();
+            menuWindow->close();
         }
 
         // Controls window
@@ -83,15 +82,15 @@ void printMenu() {
            
             controls.setTexture(&controlsTexture);
 
-            menuWindow.draw(controls);
+            menuWindow->draw(controls);
             Button backButton(sf::Vector2f(250, 70), sf::Vector2f(500, 140), &backButtonTexture);
-            backButton.Draw(menuWindow);
+            backButton.Draw(*menuWindow);
 
-            if (backButton.IsPressed(menuWindow)) {
+            if (backButton.IsPressed(*menuWindow)) {
                 inWindow = false; // Set the flag to false when back button is pressed
             }
         }
 
-        menuWindow.display();
+        menuWindow->display();
     }
 }

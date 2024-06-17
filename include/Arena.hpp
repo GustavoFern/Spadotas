@@ -10,15 +10,14 @@
 class Arena
 {
 public:
-    Arena();
-    void run();
+    Arena(sf::RenderWindow* window);
+    int run();
 
 private:
     void processEvents();
     void update();
     void render();
 
-    sf::RenderWindow window;
     b2World world;
     Collidable ground;
     Collidable LimIz;
@@ -26,17 +25,19 @@ private:
     Collidable LimSup;
     Player player1;
     Player player2;
+    sf::RenderWindow* window;
     sf::Texture player1Texture;
     sf::Texture player2Texture;
     sf::Texture fondoTexture;
     sf::Sprite fondoSprite;
+    ContactListener contactListener;
 
     float desiredSpeed;
-    ContactListener contactListener;
+    int gameInProgres=1;
 };
 
-Arena::Arena()
-    : window(sf::VideoMode(1280, 720), "Spadotas"),
+Arena::Arena(sf::RenderWindow* win)
+    : window(win),
       world(b2Vec2(0.0f, 12.0f)),
       ground(world, 640.0f, 682.5f, 1280.0f, 75.0f),
       LimIz(world, 0.0f, 360.0f, 1.0f, 720.0f),
@@ -44,7 +45,6 @@ Arena::Arena()
       LimSup(world, 640.0f, 0.0f, 1280.0f, 1.0f),
       desiredSpeed(12.0f)
 {
-    window.setFramerateLimit(60);
 
     if (!player1Texture.loadFromFile("assets/images/idle.png")) {
         std::cout << "No se cargo correctamente";
@@ -68,14 +68,15 @@ fondoSprite.setTexture(fondoTexture);
     world.SetContactListener(&contactListener); // Registrar el contact listener
 }
 
-void Arena::run()
+int Arena::run()
 {
-    while (window.isOpen())
+    while (gameInProgres==1)
     {
         update();
         processEvents();
         render();
     }
+    return 0;
 }
 
 void Arena::processEvents()
@@ -83,14 +84,14 @@ void Arena::processEvents()
     static bool mKeyWasPressed = false;
     static bool spaceKeyPressed = false;
     sf::Event event;
-    while (window.pollEvent(event))
+    while (window->pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
-            window.close();
+            window->close();
     }
 
     if (player1.AreYouLive()||player2.AreYouLive()){
-        window.close();
+        gameInProgres=0;
     }
 
     //! Manejar la entrada del teclado Player 1
@@ -265,15 +266,15 @@ void Arena::update()
 
 void Arena::render()
 {
-    window.clear();
+    window->clear();
 
     // Dibujar el fondo (no cambia, por lo que no se actualiza)
-    window.draw(fondoSprite);
+    window->draw(fondoSprite);
 
     // Dibujar el frente dinámico
-    ground.draw(window); // Dibujar el suelo
-    player1.draw(window);
-    player2.draw(window);
+    ground.draw(*window); // Dibujar el suelo
+    player1.draw(*window);
+    player2.draw(*window);
 
-    window.display();
+    window->display();
 }
