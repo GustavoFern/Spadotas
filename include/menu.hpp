@@ -32,8 +32,9 @@ public:
 
         // Sonidos
         Sound menuMusic;
-
         menuMusic.PlayMusic("assets/sounds/menuMusic.wav");
+
+        Sound titleSound;
         Sound startSound;
         Sound controlsSound;
         // Volumen
@@ -102,6 +103,10 @@ public:
             {
                 menuWindow->close();
                 exitFunction();
+            }
+            if (title.isPressed(*menuWindow)){
+                
+                titleSound.PlaySound("assets/sounds/titleSound")
             }
 
             // Controls window
