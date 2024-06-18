@@ -41,7 +41,7 @@
 
 - Arena platforms
 
-- Multiple ColorSchemes
+- Multiple color schemes
 
 - Baboo interactable background elements
 
