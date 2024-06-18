@@ -57,7 +57,7 @@
 
 ![PhotoShopScreen2](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/screenshot2.png)
 
-![PhotoShopScreen3](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/screenshot3.png)
+![PhotoShopScreen3](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/Screenshot3.png)
 
 
 
