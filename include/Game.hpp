@@ -1,11 +1,11 @@
 #pragma once
-#include "menu.hpp"
+#include "Menu.hpp"
 #include <SFML/Graphics.hpp>
 
-class Juego
+class Game
 {
 private:
-Menu menu;
+    Menu menu;
     sf::RenderWindow window;
 
 public:
@@ -17,9 +17,9 @@ public:
         }
     }
 
-    Juego() : window(sf::VideoMode(1280, 720), "Spadotas")
+    Game() : window(sf::VideoMode(1280, 720), "Spadotas")
     {
         window.setFramerateLimit(60);
     }
-    ~Juego(){};
+    ~Game(){};
 };

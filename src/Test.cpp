@@ -1,11 +1,8 @@
-#include <SFML/Graphics.hpp>
-#include <Box2D/Box2D.h>
-#include <iostream>
-#include "Juego.hpp"
+#include "game.hpp"
 
 int main()
 {
-    Juego juego;
-    juego.run();
+    Game game;
+    game.run();
     return 0;
 }

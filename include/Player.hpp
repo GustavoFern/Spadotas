@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
-#include "animation.hpp"
+#include "Animation.hpp"
 
 class Player
 {
@@ -113,9 +113,9 @@ public:
     //! Método para inicializar el temporizador del dash
     void coolDown()
     {
-        if (dashTimer.getElapsedTime().asSeconds() >= 5.0f)
+        if (dashTimer.getElapsedTime().asSeconds() >= 3.0f)
         {
-            std::cout << "Dash available\n";
+            // std::cout << "Dash available\n";
             dashAvailable = true; // Habilitar el dash
         }
     }

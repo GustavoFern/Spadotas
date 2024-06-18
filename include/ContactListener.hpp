@@ -49,7 +49,7 @@ void ContactListener::BeginContact(b2Contact *contact)
     if ((bodyUserDataA == static_cast<uintptr_t>(3) && bodyUserDataB == static_cast<uintptr_t>(1)) ||
         (bodyUserDataA == static_cast<uintptr_t>(1) && bodyUserDataB == static_cast<uintptr_t>(3)))
     {
-        //std::cout << "BeginPlayersContact\n";
+        // std::cout << "BeginPlayersContact\n";
         playersInContact = true;
     }
 }
@@ -81,7 +81,7 @@ void ContactListener::EndContact(b2Contact *contact)
     if ((bodyUserDataA == static_cast<uintptr_t>(3) && bodyUserDataB == static_cast<uintptr_t>(1)) ||
         (bodyUserDataA == static_cast<uintptr_t>(1) && bodyUserDataB == static_cast<uintptr_t>(3)))
     {
-        //std::cout << "EndPlayersContact\n";
+        // std::cout << "EndPlayersContact\n";
         playersInContact = false;
     }
 }

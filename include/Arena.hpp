@@ -6,7 +6,7 @@
 #include "Collidable.hpp"
 #include "Player.hpp"
 #include "ContactListener.hpp"
-#include "sound.hpp"
+#include "Sound.hpp"
 
 class Arena
 {
@@ -37,7 +37,7 @@ private:
 
     float desiredSpeed;
     int gameInProgres = 1, row1 = 1, spt1 = 0, spt2 = 0, row2 = 1;
-    bool right1=true,right2=true;
+    bool right1 = true, right2 = true;
 };
 
 Arena::Arena(sf::RenderWindow *win)
@@ -139,8 +139,9 @@ void Arena::processEvents()
         row1 = 1;
     }
 
-if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-        row1=0;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        row1 = 0;
     }
 
     // Limitar la velocidad máxima del jugador 1
@@ -202,8 +203,9 @@ if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(
         row2 = 1;
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-        row2=0;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    {
+        row2 = 0;
     }
 
     // Limitar la velocidad máxima del jugador 2
@@ -230,7 +232,7 @@ if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(
             b2Vec2(0.5f, 0), // Fuerza que se aplica
             player2.getBody()->GetWorldCenter(),
             true);
-        
+
     if (contactListener.isPlayer2OnGround())
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // El evento al que responde
@@ -272,16 +274,22 @@ if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(
         }
     }
 
-    if(velocity1.x > 0){
-        right1=true;
-    }else{
-        right1=false;
+    if (velocity1.x > 0)
+    {
+        right1 = true;
+    }
+    else
+    {
+        right1 = false;
     }
 
-    if(velocity2.x > 0){
-        right2=true;
-    }else{
-        right2=false;
+    if (velocity2.x > 0)
+    {
+        right2 = true;
+    }
+    else
+    {
+        right2 = false;
     }
 }
 

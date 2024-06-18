@@ -1,9 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Arena.hpp"
-#include "button.hpp"
+#include "Button.hpp"
 #include <iostream>
-#include "sound.hpp"
+#include "Sound.hpp"
 
 class Menu
 {
@@ -71,19 +71,19 @@ public:
                 if (event.type == sf::Event::Closed)
                     menuWindow->close();
             }
-        
+
             menuWindow->clear();
-        
+
             // Dibujar fondo
             sf::RectangleShape background(sf::Vector2f(1280, 720));
             background.setTexture(&menuBackground);
             menuWindow->draw(background);
-        
+
             // Dibujar botones
             playButton.Draw(*menuWindow);
             optionsButton.Draw(*menuWindow);
             exitButton.Draw(*menuWindow);
-        
+
             // Check for button clicks
             if (playButton.IsPressed(*menuWindow))
             {
@@ -102,25 +102,25 @@ public:
                 menuWindow->close();
                 exitFunction();
             }
-        
+
             // Controls window
             if (inWindow)
             {
                 sf::RectangleShape controls(sf::Vector2f(1280, 720));
-        
+
                 controls.setTexture(&controlsTexture);
-        
+
                 menuWindow->draw(controls);
                 Button backButton(sf::Vector2f(250, 70), sf::Vector2f(500, 140), &backButtonTexture);
                 backButton.Draw(*menuWindow);
-        
+
                 if (backButton.IsPressed(*menuWindow))
                 {
                     controlsSound.PlaySound("assets/sounds/controlsSound.wav");
                     inWindow = false; // Set the flag to false when back button is pressed
                 }
             }
-        
+
             menuWindow->display();
         }
     }

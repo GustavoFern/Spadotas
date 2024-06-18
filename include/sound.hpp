@@ -14,8 +14,8 @@ public:
     Sound();
     ~Sound();
 
-    void PlaySound(const std::string& soundpath);
-    void PlayMusic(const std::string& musicpath);
+    void PlaySound(const std::string &soundpath);
+    void PlayMusic(const std::string &musicpath);
 
     void StopMusic();
     void StopSound();
@@ -31,7 +31,7 @@ Sound::~Sound()
 {
 }
 
-void Sound::PlaySound(const std::string& soundpath)
+void Sound::PlaySound(const std::string &soundpath)
 {
     if (buffer.loadFromFile(soundpath))
     {
@@ -44,7 +44,7 @@ void Sound::PlaySound(const std::string& soundpath)
     }
 }
 
-void Sound::PlayMusic(const std::string& musicpath)
+void Sound::PlayMusic(const std::string &musicpath)
 {
     if (music.openFromFile(musicpath))
     {

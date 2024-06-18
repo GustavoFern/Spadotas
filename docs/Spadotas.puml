@@ -1,82 +1,197 @@
 @startuml espaditas
 
-class Juego{
+class Game{
+    - menu: Menu
+    - window: sf::RenderWindow
 
+    + Game()
+    + ~Game()
+    + run(): void
 }
 class Menu {
-    -start : option
-    -controls : option
-    -exit : option
-    +RenderMenu() : void
-}
-
-class option {
-    
-}
-class LifeBar{
-    -height : int
-    -width : int
-    
+    + startFunction(window: sf::RenderWindow*): void
+    + exitFunction(): void
+    + controlsFunction(): void
+    + printMenu(menuWindow: sf::RenderWindow*): void
 }
 class Player{
-    -life : int
-    -height : int
-    -width : int
-    +TakeDamage() : int
-    +HoldSwort() : bool
-    +MoveSwort() :
-    +ThrowSword() : 
-    +Dash() :
-}
-class Sword{
-    -damage : int
-    -height : int
-    -width : int
+    - body: b2Body*
+    - sprite1: sf::Sprite
+    - sprite2: sf::Sprite
+    - runIdle: Animation
+    - jumpDash: Animation
+    - dashTimer: sf::Clock
+    - dashDurationTimer: sf::Clock
+    - clock: sf::Clock
+    - dashCounter: int
+    - lives: int
+    - dashAvailable: bool
+    - isDashing: bool
+
+    + Player()
+    + Player(world: b2World, x: float, y: float, width: float, height: float, texture1: sf::Texture*, texture2: sf::Texture*)
+    + draw(spt: int, window: sf::RenderWindow&): void
+    + update(spt: int, row: int, deltaTime: float, direction: bool): void
+    + startDash(): void 
+    + startCoolDown(): void
+    + dashState(): void
+    + coolDown(): void
+    + getBody(): b2Body*
+    + dash(dashForce: float): void
+    + reset(world: b2World, x: float, y: float, width: float, height: float, texture1: sf::Texture*, texture2: sf::Texture*): void
+    + getDashCounter() const: int
+    + increaseDashCounter(): void
+    + isDashAvailable(): bool
+    + isPlayerDashing(): bool
+    + areYouLive(): bool
 }
 class Arena{
+    - window: sf::RenderWindow*
+    - world: b2World
+    - ground: Collidable
+    - LimIz: Collidable
+    - LimDer: Collidable
+    - LimSup: Collidable
+    - player1: Player
+    - player2: Player
+    - player1TextureRunIdle: sf::Texture
+    - player2TextureRunIdle: sf::Texture
+    - player1TextureJumpDash: sf::Texture
+    - player2TextureJumpDash: sf::Texture
+    - fondoTexture: sf::Texture
+    - fondoSprite: sf::Sprite
+    - contactListener: ContactListener
+    - desiredSpeed: float
+    - gameInProgres: int
+    - row1: int
+    - spt1: int
+    - spt2: int
+    - row2: int
+    - right1: bool
+    - right2: bool
 
+    + Arena(window: sf::RenderWindow*)
+    + run(): int
+    - processEvents(): void
+    - update(): void
+    - render(): void
 }
-class Bamboo{
+class Collidable{
+    - body: b2Body*
+    - shape: sf::RectangleShape
 
+    + Collidable(world: b2World, x: float, y: float, width: float, height: float)
+    + draw(window: sf::RenderWindow): void
+    + getBody(): b2Body*
 }
-class Colisionable{
+class Sound{
+    - buffer: sf::SoundBuffer
+    - sound: sf::Sound
+    - music: sf::Music
 
+    + Sound()
+    + ~Sound()
+    + PlaySound(soundpath: std::string): void
+    + PlayMusic(musicpath: std::string): void
+    + StopMusic(): void
+    + StopSound(): void
+    + musicVolume(volume: float): void
 }
-class Atravesable{
+class Animation{
+    - uvRect: sf::IntRect
+    - imageCount: sf::Vector2u
+    - currentImage: sf::Vector2u
+    - totalTime: float
+    - switchTime: float
 
+    + Animation()
+    + Animation(texture: sf::Texture*, imageCount: sf::Vector2u, switchTime: float)
+    + ~Animation()
+    + Update(row: int, deltaTime: float, faceRight: bool): void
 }
-class Piso{
+class Button{
+    - button: sf::RectangleShape
+    - texture: sf::Texture*
+    - position: sf::Vector2f
+    - size: sf::Vector2f
 
+    + Button(size: sf::Vector2f, position: sf::Vector2f, texture: sf::Texture*)
+    + ~Button()
+    + Draw(window: sf::RenderWindow): void
+    + Update(deltaTime: float): void
+    + IsPressed(window: sf::RenderWindow): bool
 }
-class Nube{
+class ContactListener{
+    - player1OnGround: bool
+    - player2OnGround: bool
+    - playersInContact: bool
 
+    + ContactListener()
+    + BeginContact(contact: b2Contact): void
+    + EndContact(contact: b2Contact): void
+    + isPlayer1OnGround() const: bool
+    + isPlayer2OnGround() const: bool
+    + arePlayersInContact() const: bool
 }
 
+class sf::RenderWindow {}
+class sf::IntRect {}
+class sf::Vector2u {}
+class sf::Clock {}
+class sf::Sprite {}
+class sf::Texture {}
+class sf::Vector2f {}
+class sf::RectangleShape {}
+class sf::SoundBuffer {}
+class sf::Sound {}
+class sf::Music {}
+class b2World {}
+class b2Body {}
+class b2Contact {}
+class b2ContactListener {}
 
+Arena "1" o-- "1" sf::RenderWindow
+Arena *-- b2World
+Arena *-- Collidable
+Arena *-- Player
+Arena *-- sf::Texture
+Arena *-- sf::Sprite
+Arena *-- ContactListener
 
-Juego "1" *--  "2" Arena
+Player *-- sf::Sprite
+Player *-- Animation
+Player *-- sf::Clock
+Player o-- b2Body
+Player o-- b2World
+Player o-- sf::Texture
+Player o-- sf::RenderWindow
 
+Collidable *-- sf::RectangleShape
+Collidable o-- b2Body
+Collidable o-- b2World
+Collidable o-- sf::RenderWindow
 
-Arena "1" *-- "*" Bamboo
-Arena "1" *-- "*" Nube
-Arena "1" *-- "4" Sword
-Arena "1" *-- "1" Piso
-Arena "1" *-- "2" Player
-Piso "1" *-- "1" Bamboo
+Menu *-- sf::RenderWindow
+Menu *-- Arena
+Menu *-- Button
+Menu *-- Sound
+Menu *-- sf::Event
+Menu *-- sf::Texture
+Menu *-- sf::Vector2f
+Menu *-- sf::RectangleShape
 
+Game *-- Menu
+Game *-- sf::RenderWindow
 
-Player o-- Bamboo
-Player "1" o-- "1" Sword
-Player "1" *-- "1" LifeBar
+Animation *-- sf::Texture
+Animation *-- sf::IntRect
+Animation *-- sf::Vector2u
 
+Sound *-- sf::SoundBuffer
+Sound *-- sf::Sound
+Sound *-- sf::Music
 
-Bamboo <|-- Atravesable
-Nube <|-- Atravesable
-Sword <|-- Atravesable
-
-Player <|-- Colisionable
-Bamboo <|-- Colisionable
-Piso <|-- Colisionable
-
+ContactListener *-- b2Contact
+ContactListener <|-- b2ContactListener
 
 @enduml

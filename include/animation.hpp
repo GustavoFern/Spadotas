@@ -5,7 +5,7 @@ class Animation
 {
 public:
     Animation(){};
-    Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime );
+    Animation(sf::Texture *texture, sf::Vector2u imageCount, float switchTime);
     ~Animation();
 
     void Update(int row, float deltaTime, bool faceRight);
@@ -16,22 +16,20 @@ public:
 private:
     sf::Vector2u imageCount;
     sf::Vector2u currentImage;
-    
+
     float totalTime;
     float switchTime;
-
 };
 
-//Declaracion de Metodos
+// Declaracion de Metodos
 
 // Metodo Constructor
-Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime)
+Animation::Animation(sf::Texture *texture, sf::Vector2u imageCount, float switchTime)
 {
     this->imageCount = imageCount;
     this->switchTime = switchTime;
     totalTime = 0.0f;
     currentImage.x = 0;
-   
 
     uvRect.width = texture->getSize().x / float(imageCount.x);
     uvRect.height = texture->getSize().y / float(imageCount.y);
@@ -56,7 +54,6 @@ void Animation::Update(int row, float deltaTime, bool faceRight)
         }
     }
 
-   
     uvRect.top = currentImage.y * uvRect.height;
 
     if (faceRight)
@@ -70,4 +67,3 @@ void Animation::Update(int row, float deltaTime, bool faceRight)
         uvRect.width = -abs(uvRect.width);
     }
 }
-    
