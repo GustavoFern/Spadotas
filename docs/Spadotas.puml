@@ -151,47 +151,47 @@ class b2Contact {}
 class b2ContactListener {}
 
 Arena "1" o-- "1" sf::RenderWindow
-Arena *-- b2World
-Arena *-- Collidable
-Arena *-- Player
-Arena *-- sf::Texture
-Arena *-- sf::Sprite
-Arena *-- ContactListener
+Arena "1" *-- "1" b2World
+Arena "1" *-- "4" Collidable
+Arena "1" *-- "2" Player
+Arena "1" *-- "5" sf::Texture
+Arena "1" *-- "1" sf::Sprite
+Arena "1" *-- "1" ContactListener
 
-Player *-- sf::Sprite
-Player *-- Animation
-Player *-- sf::Clock
-Player o-- b2Body
-Player o-- b2World
-Player o-- sf::Texture
-Player o-- sf::RenderWindow
+Player "1" *-- "1" sf::Sprite
+Player "1" *-- "2" Animation
+Player "1" *-- "3" sf::Clock
+Player "1" *-- "1" b2Body
+Player "1" o-- "1" b2World
+Player "1" o-- "2" sf::Texture
+Player "1" o-- "1" sf::RenderWindow
 
-Collidable *-- sf::RectangleShape
-Collidable o-- b2Body
-Collidable o-- b2World
-Collidable o-- sf::RenderWindow
+Collidable "1" *-- "1" sf::RectangleShape
+Collidable "1" *-- "1" b2Body
+Collidable "1" o-- "1" b2World
+Collidable "1" o-- "1" sf::RenderWindow
 
-Menu *-- sf::RenderWindow
-Menu *-- Arena
-Menu *-- Button
-Menu *-- Sound
-Menu *-- sf::Event
-Menu *-- sf::Texture
-Menu *-- sf::Vector2f
-Menu *-- sf::RectangleShape
+Menu "1" o-- "1" sf::RenderWindow
+Menu "1" *-- "1" Arena
+Menu "1" *-- "5" Button
+Menu "1" *-- "3" Sound
+Menu "1" *-- "1" sf::Event
+Menu "1" *-- "7" sf::Texture
+Menu "1" *-- "2" sf::Vector2f
+Menu "1" *-- "2" sf::RectangleShape
 
-Game *-- Menu
-Game *-- sf::RenderWindow
+Game "1" *-- "1" Menu
+Game "1" *-- "1" sf::RenderWindow
 
-Animation *-- sf::Texture
-Animation *-- sf::IntRect
-Animation *-- sf::Vector2u
+Animation "1" o-- "1" sf::Texture
+Animation "1" *-- "1" sf::IntRect
+Animation "1" *-- "2" sf::Vector2u
 
-Sound *-- sf::SoundBuffer
-Sound *-- sf::Sound
-Sound *-- sf::Music
+Sound "1" *-- "1" sf::SoundBuffer
+Sound "1" *-- "1" sf::Sound
+Sound "1" *-- "1" sf::Music
 
-ContactListener *-- b2Contact
+ContactListener "1" o-- "1" b2Contact
 ContactListener <|-- b2ContactListener
 
 @enduml
