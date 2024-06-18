@@ -106,7 +106,7 @@ public:
             }
             if (title.IsPressed(*menuWindow)){
                 
-                titleSound.PlaySound("assets/sounds/titleSound");
+                titleSound.PlaySound("assets/sounds/titleSound.wav");
             }
 
             // Controls window
