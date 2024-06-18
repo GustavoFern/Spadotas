@@ -53,10 +53,17 @@
 
 -  ## Screenshots
 
+**Making of the main menu**
 ![PhotoShopScreen1](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/screenshot1.png)
 
+
+
+**Making of the Title**
 ![PhotoShopScreen2](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/screenshot2.png)
 
+
+
+**Arranging player sprite sheets**
 ![PhotoShopScreen3](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/Screenshot3.png)
 
 
