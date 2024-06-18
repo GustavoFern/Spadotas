@@ -61,7 +61,7 @@ public:
         Button optionsButton(sf::Vector2f(280, 60), sf::Vector2f(500, 435), &optionsButtonTexture);
         Button exitButton(sf::Vector2f(280, 60), sf::Vector2f(500, 500), &exitTexture);
         Button backButton(sf::Vector2f(700, 130), sf::Vector2f(500, 100), &exitTexture);
-        Button title(sf::Vector2f(1280, 288),sf::Vector2f(500, 150), &titleTexture);
+        Button title(sf::Vector2f(1280, 288),sf::Vector2f(0, 0), &titleTexture);
 
         bool inWindow = false; // Add a flag to control the controls window
 
