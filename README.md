@@ -10,11 +10,9 @@
 ## Acknowledgements
 
  - [**SFML**](https://www.sfml-dev.org/)
-
- - [**Box2D**](https://github.com/matiassingers/awesome-readme)
+ - [**Box2D**](https://box2d.org/)
  - [**Great GameDevBook**](https://www.amazon.com/Level-Guide-Great-Video-Design/dp/1118877160)
  - [**Great c++ DevBook**](https://github.com/CRySoL/pensarencpp)
-
 
 ## Authors
 
@@ -45,8 +43,21 @@
 
 - Multiple ColorSchemes
 
--
+- Baboo interactable background elements
 
+- Game over window
+
+- Life and dash counters 
+
+- Cloud animations
+
+-  ## Screenshots
+
+![PhotoShopScreen1](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/screenshot1.png)
+
+![PhotoShopScreen2](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/screenshot2.png)
+
+![PhotoShopScreen3](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/screenshot3.png)
 
 
 
