@@ -6,6 +6,7 @@
 #include "Collidable.hpp"
 #include "Player.hpp"
 #include "ContactListener.hpp"
+#include "sound.hpp"
 
 class Arena
 {
@@ -36,6 +37,7 @@ private:
 
     float desiredSpeed;
     int gameInProgres = 1, row1 = 1, spt1 = 0, spt2 = 0, row2 = 1;
+    bool right1=true,right2=true;
 };
 
 Arena::Arena(sf::RenderWindow *win)
@@ -47,7 +49,8 @@ Arena::Arena(sf::RenderWindow *win)
       LimSup(world, 640.0f, 0.0f, 1280.0f, 1.0f),
       desiredSpeed(12.0f)
 {
-
+    Sound arenaMusic;
+    arenaMusic.PlayMusic("assets/sounds/arenaMusic.wav");
     if (!player1TextureRunIdle.loadFromFile("assets/images/runIdle.png"))
     {
         std::cout << "No se cargo correctamente";
@@ -268,14 +271,26 @@ if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(
             player1.getBody()->GetUserData().pointer = static_cast<uintptr_t>(1); // Identificador del jugador 2
         }
     }
+
+    if(velocity1.x > 0){
+        right1=true;
+    }else{
+        right1=false;
+    }
+
+    if(velocity2.x > 0){
+        right2=true;
+    }else{
+        right2=false;
+    }
 }
 
 void Arena::update()
 {
     // Avanzar la simulación de Box2D
     world.Step(1.0f / 60.0f, 6, 2);
-    player1.update(spt1, row1, 0.0f);
-    player2.update(spt2, row2, 0.0f);
+    player1.update(spt1, row1, 0.0f, right1);
+    player2.update(spt2, row2, 0.0f, right2);
 
     if (player1.isPlayerDashing())
     {

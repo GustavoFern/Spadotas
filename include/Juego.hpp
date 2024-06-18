@@ -5,19 +5,15 @@
 class Juego
 {
 private:
+Menu menu;
     sf::RenderWindow window;
-
-    void Menu()
-    {
-        printMenu(&window);
-    }
 
 public:
     void run()
     {
         while (window.isOpen())
         {
-            Menu();
+            menu.printMenu(&window);
         }
     }
 

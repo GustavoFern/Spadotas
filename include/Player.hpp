@@ -58,13 +58,13 @@ public:
     }
 
     //! Actualizador de animacion
-    void update(int spt, int row, float deltaTime)
+    void update(int spt, int row, float deltaTime, bool direction)
     {
         deltaTime = clock.restart().asSeconds();
         if (spt == 0)
         {
             // Actualizar la animación
-            runIdle.Update(row, deltaTime); // Asumiendo que la fila 0 es la animación deseada
+            runIdle.Update(row, deltaTime, direction); // Asumiendo que la fila 0 es la animación deseada
 
             // Actualizar el rectángulo de textura del sprite
             sprite1.setTextureRect(runIdle.uvRect);
@@ -73,7 +73,7 @@ public:
         if (spt == 1)
         {
             // Actualizar la animación
-            jumpDash.Update(row, deltaTime); // Asumiendo que la fila 0 es la animación deseada
+            jumpDash.Update(row, deltaTime, direction); // Asumiendo que la fila 0 es la animación deseada
 
             // Actualizar el rectángulo de textura del sprite
             sprite2.setTextureRect(jumpDash.uvRect);
