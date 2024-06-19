@@ -16,6 +16,7 @@
 
 ## Authors
 
+
 - [@GustavoFern](https://github.com/GustavoFern)
     Gustavo Fernandez Flores 23110184
 
@@ -30,9 +31,6 @@
 - Cross platform
 - 2 original soundtracks
 - Original textures and backdrops
-
-
-
 
 
 ## Roadmap
@@ -51,7 +49,16 @@
 
 - Cloud animations
 
--  ## Screenshots
+## UML
+
+!(UML)[https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/UML.png]
+
+## Screenshots and concept art
+
+
+
+## **First Menu Concept Art
+![OldMenu](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/OldTitle.png)
 
 ## **First Build of the game
 ![FirstBuild](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/PhysicsTest.gif)
@@ -62,12 +69,8 @@
 ## **Making of the main menu**
 ![PhotoShopScreen1](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/screenshot1.png)
 
-
-
 ## **Making of the Title**
 ![PhotoShopScreen2](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/screenshot2.png)
-
-
 
 ## **Arranging player sprite sheets**
 ![PhotoShopScreen3](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/Screenshot3.png)
