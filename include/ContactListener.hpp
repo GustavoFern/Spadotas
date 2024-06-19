@@ -12,9 +12,9 @@ public:
     void BeginContact(b2Contact *contact) override;
     void EndContact(b2Contact *contact) override;
 
-    bool isPlayer1OnGround() const;
-    bool isPlayer2OnGround() const;
-    bool arePlayersInContact() const;
+    bool IsPlayer1OnGround() const;
+    bool IsPlayer2OnGround() const;
+    bool ArePlayersInContact() const;
 
 private:
     bool player1OnGround;
@@ -86,17 +86,17 @@ void ContactListener::EndContact(b2Contact *contact)
     }
 }
 
-bool ContactListener::isPlayer1OnGround() const
+bool ContactListener::IsPlayer1OnGround() const
 {
     return player1OnGround;
 }
 
-bool ContactListener::isPlayer2OnGround() const
+bool ContactListener::IsPlayer2OnGround() const
 {
     return player2OnGround;
 }
 
-bool ContactListener::arePlayersInContact() const
+bool ContactListener::ArePlayersInContact() const
 {
     return playersInContact;
 }

@@ -12,18 +12,18 @@ class Arena
 {
 public:
     Arena(sf::RenderWindow *window);
-    int run();
+    int Run();
 
 private:
-    void processEvents();
-    void update();
-    void render();
+    void ProcessEvents();
+    void Update();
+    void Render();
 
     b2World world;
     Collidable ground;
-    Collidable LimIz;
-    Collidable LimDer;
-    Collidable LimSup;
+    Collidable limIz;
+    Collidable limDer;
+    Collidable limSup;
     Player player1;
     Player player2;
     sf::RenderWindow *window;
@@ -44,9 +44,9 @@ Arena::Arena(sf::RenderWindow *win)
     : window(win),
       world(b2Vec2(0.0f, 12.0f)),
       ground(world, 640.0f, 682.5f, 1280.0f, 75.0f),
-      LimIz(world, 0.0f, 360.0f, 1.0f, 720.0f),
-      LimDer(world, 1280.0f, 360.0f, 1.0f, 720.0f),
-      LimSup(world, 640.0f, 0.0f, 1280.0f, 1.0f),
+      limIz(world, 0.0f, 360.0f, 1.0f, 720.0f),
+      limDer(world, 1280.0f, 360.0f, 1.0f, 720.0f),
+      limSup(world, 640.0f, 0.0f, 1280.0f, 1.0f),
       desiredSpeed(12.0f)
 {
     Sound arenaMusic;
@@ -73,29 +73,29 @@ Arena::Arena(sf::RenderWindow *win)
     }
     fondoSprite.setTexture(fondoTexture);
 
-    player1 = Player(world, 800.0f, 300.0f, 50.0f, 50.0f, &player1TextureRunIdle, &player1TextureJumpDash),
-    player2 = Player(world, 400.0f, 300.0f, 50.0f, 50.0f, &player2TextureRunIdle, &player2TextureJumpDash),
+    player1 = Player(world, 800.0f, 300.0f, 50.0f, 50.0f, &player1TextureRunIdle, &player1TextureJumpDash);
+    player2 = Player(world, 400.0f, 300.0f, 50.0f, 50.0f, &player2TextureRunIdle, &player2TextureJumpDash);
 
     // Configurar identificadores de usuario para los cuerpos
-        ground.getBody()->GetUserData().pointer = static_cast<uintptr_t>(2); // Identificador del suelo
-    player1.getBody()->GetUserData().pointer = static_cast<uintptr_t>(1);    // Identificador del jugador 1
-    player2.getBody()->GetUserData().pointer = static_cast<uintptr_t>(3);    // Identificador del jugador 2
+    ground.GetBody()->GetUserData().pointer = static_cast<uintptr_t>(2); // Identificador del suelo
+    player1.GetBody()->GetUserData().pointer = static_cast<uintptr_t>(1);    // Identificador del jugador 1
+    player2.GetBody()->GetUserData().pointer = static_cast<uintptr_t>(3);    // Identificador del jugador 2
 
     world.SetContactListener(&contactListener); // Registrar el contact listener
 }
 
-int Arena::run()
+int Arena::Run()
 {
     while (gameInProgres == 1)
     {
-        update();
-        processEvents();
-        render();
+        Update();
+        ProcessEvents();
+        Render();
     }
     return 0;
 }
 
-void Arena::processEvents()
+void Arena::ProcessEvents()
 {
     static bool mKeyWasPressed = false;
     static bool spaceKeyPressed = false;
@@ -106,7 +106,7 @@ void Arena::processEvents()
             window->close();
     }
 
-    if (player1.AreYouLive() || player2.AreYouLive())
+    if (player1.GetLiveState() || player2.GetLiveState())
     {
         gameInProgres = 0;
     }
@@ -115,11 +115,11 @@ void Arena::processEvents()
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
     {
-        if (!mKeyWasPressed && player1.isDashAvailable() && !player1.isPlayerDashing())
+        if (!mKeyWasPressed && player1.GetDashAvailable() && !player1.GetDashState())
         {
-            player1.startDash();
-            player1.dash(4.0f);
-            player1.increaseDashCounter();
+            player1.StartDash();
+            player1.Dash(4.0f);
+            player1.IncreaseDashCounter();
         }
         mKeyWasPressed = true;
     }
@@ -128,7 +128,7 @@ void Arena::processEvents()
         mKeyWasPressed = false;
     }
 
-    if (player1.isPlayerDashing())
+    if (player1.GetDashState())
     {
         spt1 = 1;
         row1 = 0;
@@ -145,33 +145,33 @@ void Arena::processEvents()
     }
 
     // Limitar la velocidad máxima del jugador 1
-    b2Vec2 velocity1 = player1.getBody()->GetLinearVelocity();
-    if (abs(velocity1.x) > desiredSpeed && !player1.isPlayerDashing())
+    b2Vec2 velocity1 = player1.GetBody()->GetLinearVelocity();
+    if (abs(velocity1.x) > desiredSpeed && !player1.GetDashState())
     {
         velocity1.x = (velocity1.x > 0 ? 1 : -1) * desiredSpeed; // Ajusta la velocidad en X manteniendo el signo
-        player1.getBody()->SetLinearVelocity(velocity1);         // Aplicar la velocidad limitada al jugador
+        player1.GetBody()->SetLinearVelocity(velocity1);         // Aplicar la velocidad limitada al jugador
     }
     if (velocity1.y > -10.0f)
     {
-        player1.getBody()->ApplyForceToCenter(b2Vec2(0.0f, 10.0f), true);
+        player1.GetBody()->ApplyForceToCenter(b2Vec2(0.0f, 10.0f), true);
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !player1.isPlayerDashing()) // El evento al que responde
-        player1.getBody()->ApplyLinearImpulse(
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !player1.GetDashState()) // El evento al que responde
+        player1.GetBody()->ApplyLinearImpulse(
             b2Vec2(-0.5f, 0), // Fuerza que se aplica
-            player1.getBody()->GetWorldCenter(),
+            player1.GetBody()->GetWorldCenter(),
             true);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !player1.isPlayerDashing()) // El evento al que responde
-        player1.getBody()->ApplyLinearImpulse(
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !player1.GetDashState()) // El evento al que responde
+        player1.GetBody()->ApplyLinearImpulse(
             b2Vec2(0.5f, 0), // Fuerza que se aplica
-            player1.getBody()->GetWorldCenter(),
+            player1.GetBody()->GetWorldCenter(),
             true);
-    if (contactListener.isPlayer1OnGround())
+    if (contactListener.IsPlayer1OnGround())
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) // El evento al que responde
-            player1.getBody()->ApplyLinearImpulse(
+            player1.GetBody()->ApplyLinearImpulse(
                 b2Vec2(0, -3.5f), // Fuerza que se aplica
-                player1.getBody()->GetWorldCenter(),
+                player1.GetBody()->GetWorldCenter(),
                 true);
     }
 
@@ -179,11 +179,11 @@ void Arena::processEvents()
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
     {
-        if (!spaceKeyPressed && player2.isDashAvailable() && !player2.isPlayerDashing())
+        if (!spaceKeyPressed && player2.GetDashAvailable() && !player2.GetDashState())
         {
-            player2.startDash();
-            player2.dash(4.0f);
-            player2.increaseDashCounter();
+            player2.StartDash();
+            player2.Dash(4.0f);
+            player2.IncreaseDashCounter();
         }
         spaceKeyPressed = true;
     }
@@ -192,7 +192,7 @@ void Arena::processEvents()
         spaceKeyPressed = false;
     }
 
-    if (player2.isPlayerDashing())
+    if (player2.GetDashState())
     {
         spt2 = 1;
         row2 = 0;
@@ -210,67 +210,67 @@ void Arena::processEvents()
 
     // Limitar la velocidad máxima del jugador 2
 
-    b2Vec2 velocity2 = player2.getBody()->GetLinearVelocity();
-    if (abs(velocity2.x) > desiredSpeed && !player2.isPlayerDashing())
+    b2Vec2 velocity2 = player2.GetBody()->GetLinearVelocity();
+    if (abs(velocity2.x) > desiredSpeed && !player2.GetDashState())
     {
         velocity2.x = (velocity2.x > 0 ? 1 : -1) * desiredSpeed; // Ajusta la velocidad en X manteniendo el signo
-        player2.getBody()->SetLinearVelocity(velocity2);         // Aplicar la velocidad limitada al jugador
+        player2.GetBody()->SetLinearVelocity(velocity2);         // Aplicar la velocidad limitada al jugador
     }
     if (velocity2.y > -10.0f)
     {
-        player2.getBody()->ApplyForceToCenter(b2Vec2(0.0f, 10.0f), true);
+        player2.GetBody()->ApplyForceToCenter(b2Vec2(0.0f, 10.0f), true);
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !player2.isPlayerDashing()) // El evento al que responde
-        player2.getBody()->ApplyLinearImpulse(
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !player2.GetDashState()) // El evento al que responde
+        player2.GetBody()->ApplyLinearImpulse(
             b2Vec2(-0.5f, 0), // Fuerza que se aplica
-            player2.getBody()->GetWorldCenter(),
+            player2.GetBody()->GetWorldCenter(),
             true);
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !player2.isPlayerDashing()) // El evento al que responde
-        player2.getBody()->ApplyLinearImpulse(
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !player2.GetDashState()) // El evento al que responde
+        player2.GetBody()->ApplyLinearImpulse(
             b2Vec2(0.5f, 0), // Fuerza que se aplica
-            player2.getBody()->GetWorldCenter(),
+            player2.GetBody()->GetWorldCenter(),
             true);
 
-    if (contactListener.isPlayer2OnGround())
+    if (contactListener.IsPlayer2OnGround())
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // El evento al que responde
-            player2.getBody()->ApplyLinearImpulse(
+            player2.GetBody()->ApplyLinearImpulse(
                 b2Vec2(0, -3.5f), // Fuerza que se aplica
-                player2.getBody()->GetWorldCenter(),
+                player2.GetBody()->GetWorldCenter(),
                 true);
     }
 
     //! Respawn de los jugadores o choque de espadas
-    if (contactListener.arePlayersInContact() && player2.isPlayerDashing() && player1.isPlayerDashing())
+    if (contactListener.ArePlayersInContact() && player2.GetDashState() && player1.GetDashState())
     {
         // Si ambos jugadores están dashing hacia el otro, aplicar un impulso para separarlos
         if ((velocity2.x > 0.0f && velocity1.x < 0.0f) || (velocity2.x < 0.0f && velocity1.x > 0.0f))
         {
             // Aplicar un impulso hacia afuera basado en la dirección de cada jugador
-            b2Vec2 impulseToPlayer2 = player2.getBody()->GetWorldCenter() - player1.getBody()->GetWorldCenter();
+            b2Vec2 impulseToPlayer2 = player2.GetBody()->GetWorldCenter() - player1.GetBody()->GetWorldCenter();
             impulseToPlayer2.Normalize(); // Normalizar para obtener solo la dirección
             impulseToPlayer2 *= 4.0f;     // Ajustar la magnitud del impulso
 
             b2Vec2 impulseToPlayer1 = -impulseToPlayer2; // Impulso opuesto para el otro jugador
 
-            player2.getBody()->ApplyLinearImpulse(impulseToPlayer2, player2.getBody()->GetWorldCenter(), true);
-            player1.getBody()->ApplyLinearImpulse(impulseToPlayer1, player1.getBody()->GetWorldCenter(), true);
+            player2.GetBody()->ApplyLinearImpulse(impulseToPlayer2, player2.GetBody()->GetWorldCenter(), true);
+            player1.GetBody()->ApplyLinearImpulse(impulseToPlayer1, player1.GetBody()->GetWorldCenter(), true);
         }
     }
     else
     {
-        if (contactListener.arePlayersInContact() && player1.isPlayerDashing())
+        if (contactListener.ArePlayersInContact() && player1.GetDashState())
         {
-            player2.reset(world, 200.0f, 100.0f, 50.0f, 50.0f, &player2TextureRunIdle, &player2TextureJumpDash);
-            player2.getBody()->GetUserData().pointer = static_cast<uintptr_t>(3); // Identificador del jugador 2
+            player2.Reset(world, 200.0f, 100.0f, 50.0f, 50.0f, &player2TextureRunIdle, &player2TextureJumpDash);
+            player2.GetBody()->GetUserData().pointer = static_cast<uintptr_t>(3); // Identificador del jugador 2
         }
 
-        if (contactListener.arePlayersInContact() && player2.isPlayerDashing())
+        if (contactListener.ArePlayersInContact() && player2.GetDashState())
         {
-            player1.reset(world, 1000.0f, 100.0f, 50.0f, 50.0f, &player1TextureRunIdle, &player1TextureJumpDash);
-            player1.getBody()->GetUserData().pointer = static_cast<uintptr_t>(1); // Identificador del jugador 2
+            player1.Reset(world, 1000.0f, 100.0f, 50.0f, 50.0f, &player1TextureRunIdle, &player1TextureJumpDash);
+            player1.GetBody()->GetUserData().pointer = static_cast<uintptr_t>(1); // Identificador del jugador 2
         }
     }
 
@@ -293,47 +293,47 @@ void Arena::processEvents()
     }
 }
 
-void Arena::update()
+void Arena::Update()
 {
     // Avanzar la simulación de Box2D
     world.Step(1.0f / 60.0f, 6, 2);
-    player1.update(spt1, row1, 0.0f, right1);
-    player2.update(spt2, row2, 0.0f, right2);
+    player1.Update(spt1, row1, 0.0f, right1);
+    player2.Update(spt2, row2, 0.0f, right2);
 
-    if (player1.isPlayerDashing())
+    if (player1.GetDashState())
     {
-        player1.dashState();
+        player1.SetDashState();
     }
 
-    if (player1.getDashCounter() >= 2 && !player1.isPlayerDashing())
+    if (player1.GetDashCounter() >= 2 && !player1.GetDashState())
     {
         // std::cout << "Cooldown\n";
-        player1.startCoolDown();
+        player1.StartCoolDown();
     }
 
-    if (!player1.isDashAvailable())
+    if (!player1.GetDashAvailable())
     {
-        player1.coolDown();
+        player1.SetCoolDown();
     }
 
-    if (player2.isPlayerDashing())
+    if (player2.GetDashState())
     {
-        player2.dashState();
+        player2.SetDashState();
     }
 
-    if (player2.getDashCounter() >= 2 && !player2.isPlayerDashing())
+    if (player2.GetDashCounter() >= 2 && !player2.GetDashState())
     {
         // std::cout << "Cooldown\n";
-        player2.startCoolDown();
+        player2.StartCoolDown();
     }
 
-    if (!player2.isDashAvailable())
+    if (!player2.GetDashAvailable())
     {
-        player2.coolDown();
+        player2.SetCoolDown();
     }
 }
 
-void Arena::render()
+void Arena::Render()
 {
     window->clear();
 
@@ -341,9 +341,9 @@ void Arena::render()
     window->draw(fondoSprite);
 
     // Dibujar el frente dinámico
-    ground.draw(*window); // Dibujar el suelo
-    player1.draw(spt1, *window);
-    player2.draw(spt2, *window);
+    ground.Draw(*window); // Dibujar el suelo
+    player1.Draw(spt1, *window);
+    player2.Draw(spt2, *window);
 
     window->display();
 }

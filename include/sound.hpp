@@ -20,7 +20,7 @@ public:
     void StopMusic();
     void StopSound();
 
-    void musicVolume(float volume);
+    void SetMusicVolume(float volume);
 };
 
 Sound::Sound()
@@ -66,7 +66,7 @@ void Sound::StopSound()
     sound.stop();
 }
 
-void Sound::musicVolume(float volume)
+void Sound::SetMusicVolume(float volume)
 {
     music.setVolume(volume);
 }

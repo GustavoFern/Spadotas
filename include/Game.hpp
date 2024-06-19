@@ -9,11 +9,11 @@ private:
     sf::RenderWindow window;
 
 public:
-    void run()
+    void Run()
     {
         while (window.isOpen())
         {
-            menu.printMenu(&window);
+            menu.PrintMenu(&window);
         }
     }
 

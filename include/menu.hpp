@@ -8,26 +8,26 @@
 class Menu
 {
 public:
-    void startFunction(sf::RenderWindow *window)
+    void SetStartFunction(sf::RenderWindow *window)
     {
 
         Sound arenaMusic;
         arenaMusic.PlayMusic("assets/sounds/arenaMusic.wav");
 
         Arena arena(window);
-        arena.run();
+        arena.Run();
     }
-    void exitFunction()
+    void SetExitFunction()
     {
 
         std::cout << "Boton salida\n";
         exit(0);
     }
-    void controlsFunction()
+    void SetControlsFunction()
     {
         std::cout << "Boton controles\n";
     }
-    void printMenu(sf::RenderWindow *menuWindow)
+    void PrintMenu(sf::RenderWindow *menuWindow)
     {
 
         // Sonidos
@@ -38,7 +38,7 @@ public:
         Sound startSound;
         Sound controlsSound;
         // Volumen
-        menuMusic.musicVolume(30);
+        menuMusic.SetMusicVolume(30);
 
         // Texturas
         sf::Texture titleTexture;
@@ -91,18 +91,18 @@ public:
             {
                 menuMusic.StopMusic();
                 startSound.PlaySound("assets/sounds/startSound.wav");
-                startFunction(menuWindow);
+                SetStartFunction(menuWindow);
             }
             if (optionsButton.IsPressed(*menuWindow))
             {
                 controlsSound.PlaySound("assets/sounds/controlsSound.wav");
-                controlsFunction();
+                SetControlsFunction();
                 inWindow = true; // Set the flag to true when controls button is pressed
             }
             if (exitButton.IsPressed(*menuWindow))
             {
                 menuWindow->close();
-                exitFunction();
+                SetExitFunction();
             }
             if (title.IsPressed(*menuWindow))
             {

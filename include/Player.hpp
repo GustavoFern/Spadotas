@@ -38,7 +38,7 @@ public:
     }
 
     //! Método para dibujar el jugador
-    void draw(int spt, sf::RenderWindow &window)
+    void Draw(int spt, sf::RenderWindow &window)
     {
         // Actualizar la posición del sprite
         b2Vec2 position = body->GetPosition();
@@ -58,7 +58,7 @@ public:
     }
 
     //! Actualizador de animacion
-    void update(int spt, int row, float deltaTime, bool direction)
+    void Update(int spt, int row, float deltaTime, bool direction)
     {
         deltaTime = clock.restart().asSeconds();
         if (spt == 0)
@@ -81,7 +81,7 @@ public:
     }
 
     //! Metodo para iniciar el dash
-    void startDash()
+    void StartDash()
     {
         if (!isDashing) // Asegurarse de que no estamos ya en un dash
         {
@@ -92,7 +92,7 @@ public:
     }
 
     //! Metodo para iniciar el cooldawn
-    void startCoolDown()
+    void StartCoolDown()
     {
         dashAvailable = false; // Habilitar el dash
         dashCounter = 0;       // Reiniciar el contador
@@ -100,7 +100,7 @@ public:
     }
 
     //! Metodo para actualizar el estado del dash
-    void dashState()
+    void SetDashState()
     {
         if (isDashing && dashDurationTimer.getElapsedTime().asSeconds() >= 1.0f)
         {
@@ -111,7 +111,7 @@ public:
     }
 
     //! Método para inicializar el temporizador del dash
-    void coolDown()
+    void SetCoolDown()
     {
         if (dashTimer.getElapsedTime().asSeconds() >= 3.0f)
         {
@@ -121,13 +121,13 @@ public:
     }
 
     //! Método para acceder al cuerpo del jugador
-    b2Body *getBody()
+    b2Body *GetBody()
     {
         return body;
     }
 
     //! Método para realizar un dash
-    void dash(float dashForce)
+    void Dash(float dashForce)
     {
         // Obtener la dirección en la que el jugador está mirando o quiere desplazarse
         b2Vec2 direction = body->GetLinearVelocity();
@@ -140,7 +140,7 @@ public:
     }
 
     //! Método para reiniciar el jugador
-    void reset(b2World &world, float x, float y, float width, float height, sf::Texture *texture1, sf::Texture *texture2)
+    void Reset(b2World &world, float x, float y, float width, float height, sf::Texture *texture1, sf::Texture *texture2)
     {
         // Primero, destruye el cuerpo actual si existe
         if (body != nullptr)
@@ -183,28 +183,28 @@ public:
     }
 
     //! Métodos para acceder/modificar el contador y el temporizador
-    int getDashCounter() const
+    int GetDashCounter() const
     {
         return dashCounter;
     }
 
-    void increaseDashCounter()
+    void IncreaseDashCounter()
     {
         dashCounter++;
         // std::cout << "\nDash counter increased" << dashCounter;
     }
 
-    bool isDashAvailable()
+    bool GetDashAvailable()
     {
         return dashAvailable;
     }
 
-    bool isPlayerDashing()
+    bool GetDashState()
     {
         return isDashing;
     }
 
-    bool AreYouLive()
+    bool GetLiveState()
     {
         return lives == 0;
     }

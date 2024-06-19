@@ -6,13 +6,13 @@ class Game{
 
     + Game()
     + ~Game()
-    + run(): void
+    + Run(): void
 }
 class Menu {
-    + startFunction(window: sf::RenderWindow*): void
-    + exitFunction(): void
-    + controlsFunction(): void
-    + printMenu(menuWindow: sf::RenderWindow*): void
+    + SetStartFunction(window: sf::RenderWindow*): void
+    + SetExitFunction(): void
+    + SetControlsFunction(): void
+    + PrintMenu(menuWindow: sf::RenderWindow*): void
 }
 class Player{
     - body: b2Body*
@@ -30,28 +30,28 @@ class Player{
 
     + Player()
     + Player(world: b2World, x: float, y: float, width: float, height: float, texture1: sf::Texture*, texture2: sf::Texture*)
-    + draw(spt: int, window: sf::RenderWindow&): void
-    + update(spt: int, row: int, deltaTime: float, direction: bool): void
-    + startDash(): void 
-    + startCoolDown(): void
-    + dashState(): void
-    + coolDown(): void
-    + getBody(): b2Body*
-    + dash(dashForce: float): void
-    + reset(world: b2World, x: float, y: float, width: float, height: float, texture1: sf::Texture*, texture2: sf::Texture*): void
-    + getDashCounter() const: int
-    + increaseDashCounter(): void
-    + isDashAvailable(): bool
-    + isPlayerDashing(): bool
-    + areYouLive(): bool
+    + Draw(spt: int, window: sf::RenderWindow&): void
+    + Update(spt: int, row: int, deltaTime: float, direction: bool): void
+    + StartDash(): void 
+    + StartCoolDown(): void
+    + SetDashState(): void
+    + SetCoolDown(): void
+    + GetBody(): b2Body*
+    + Dash(dashForce: float): void
+    + Reset(world: b2World, x: float, y: float, width: float, height: float, texture1: sf::Texture*, texture2: sf::Texture*): void
+    + GetDashCounter() const: int
+    + IncreaseDashCounter(): void
+    + GetDashAvailable(): bool
+    + GetDashState(): bool
+    + GetLiveState(): bool
 }
 class Arena{
     - window: sf::RenderWindow*
     - world: b2World
     - ground: Collidable
-    - LimIz: Collidable
-    - LimDer: Collidable
-    - LimSup: Collidable
+    - limIz: Collidable
+    - limDer: Collidable
+    - limSup: Collidable
     - player1: Player
     - player2: Player
     - player1TextureRunIdle: sf::Texture
@@ -71,18 +71,18 @@ class Arena{
     - right2: bool
 
     + Arena(window: sf::RenderWindow*)
-    + run(): int
-    - processEvents(): void
-    - update(): void
-    - render(): void
+    + Run(): int
+    - ProcessEvents(): void
+    - Update(): void
+    - Render(): void
 }
 class Collidable{
     - body: b2Body*
     - shape: sf::RectangleShape
 
     + Collidable(world: b2World, x: float, y: float, width: float, height: float)
-    + draw(window: sf::RenderWindow): void
-    + getBody(): b2Body*
+    + Draw(window: sf::RenderWindow): void
+    + GetBody(): b2Body*
 }
 class Sound{
     - buffer: sf::SoundBuffer
@@ -95,7 +95,7 @@ class Sound{
     + PlayMusic(musicpath: std::string): void
     + StopMusic(): void
     + StopSound(): void
-    + musicVolume(volume: float): void
+    + SetMusicVolume(volume: float): void
 }
 class Animation{
     - uvRect: sf::IntRect
@@ -129,9 +129,9 @@ class ContactListener{
     + ContactListener()
     + BeginContact(contact: b2Contact): void
     + EndContact(contact: b2Contact): void
-    + isPlayer1OnGround() const: bool
-    + isPlayer2OnGround() const: bool
-    + arePlayersInContact() const: bool
+    + IsPlayer1OnGround() const: bool
+    + IsPlayer2OnGround() const: bool
+    + ArePlayersInContact() const: bool
 }
 
 class sf::RenderWindow {}

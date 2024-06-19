@@ -28,12 +28,12 @@ public:
         shape.setPosition(x, y);
         shape.setFillColor(sf::Color::Transparent);
     }
-    void draw(sf::RenderWindow &window)
+    void Draw(sf::RenderWindow &window)
     {
         window.draw(shape);
     }
 
-    b2Body *getBody()
+    b2Body *GetBody()
     {
         return body;
     }
