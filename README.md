@@ -53,6 +53,12 @@
 
 -  ## Screenshots
 
+## **First Build of the game
+![FirstBuild](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/PhysicsTest.gif)
+
+## **Game Test 
+![GameTest](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/GameTest.gif)
+
 ## **Making of the main menu**
 ![PhotoShopScreen1](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/screenshot1.png)
 
@@ -65,6 +71,8 @@
 
 ## **Arranging player sprite sheets**
 ![PhotoShopScreen3](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/Screenshot3.png)
+
+
 
 
 
