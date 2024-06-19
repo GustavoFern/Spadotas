@@ -38,6 +38,8 @@
 - Animated backgrounds
 
 - Arena platforms
+  
+- Consumables
 
 - Multiple color schemes
 
