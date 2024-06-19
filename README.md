@@ -4,7 +4,7 @@
 
 # Spadotas / Schwing
 
-**Spadotas** is a strictly local multiplayer fighting game, set in pre industrial Japan where you fight with your friends as Samurai, in an intense and fast pased duel where sharp reflexes win the game.
+**Spadotas** is a strictly local multiplayer fighting game, set in pre industrial Japan, where you fight with your friends as Samurai, in an intense and fast pased duel where sharp reflexes win the game.
 
 
 ## Acknowledgements
@@ -17,11 +17,11 @@
 ## Authors
 
 
+   **Gustavo Fernandez Flores 23110184**
 - [@GustavoFern](https://github.com/GustavoFern)
-    Gustavo Fernandez Flores 23110184
 
+    **Gerardo Monarrez Gallegos 23110200**
 - [@GeraMG1105](https://github.com/GeraMG1105)
-    Gerardo Monarrez Gallegos 23110200
 
 ## Features
 
