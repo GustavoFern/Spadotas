@@ -51,10 +51,9 @@
 
 ## UML
 
-!(UML)[https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/UML.png]
+![UML](https://github.com/GustavoFern/Spadotas/blob/main/Readme%20images/UML.png)
 
 ## Screenshots and concept art
-
 
 
 ## **First Menu Concept Art
