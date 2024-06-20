@@ -6,16 +6,15 @@
 
 **Spadotas** is a strictly local multiplayer fighting game, set in pre industrial Japan, where you fight with your friends as Samurai, in an intense and fast pased duel where sharp reflexes win the game.
 
+# How to compile
 
-## Acknowledgements
+- Download all the program files. inside the main folder make a folder named "bin".
+- Open a terminal or VS. and change directory to the game´s main folder
+- Type make runTest to compile the program and run it.
 
- - [**SFML**](https://www.sfml-dev.org/)
- - [**Box2D**](https://box2d.org/)
- - [**Great GameDevBook**](https://www.amazon.com/Level-Guide-Great-Video-Design/dp/1118877160)
- - [**Great c++ DevBook**](https://github.com/CRySoL/pensarencpp)
+
 
 ## Authors
-
 
    **Gustavo Fernandez Flores 23110184**
 - [@GustavoFern](https://github.com/GustavoFern)
@@ -78,5 +77,11 @@
 
 
 
+## Acknowledgements
+
+ - [**SFML**](https://www.sfml-dev.org/)
+ - [**Box2D**](https://box2d.org/)
+ - [**Great GameDevBook**](https://www.amazon.com/Level-Guide-Great-Video-Design/dp/1118877160)
+ - [**Great c++ DevBook**](https://github.com/CRySoL/pensarencpp)
 
 
