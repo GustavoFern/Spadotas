@@ -87,24 +87,24 @@ public:
             exitButton.Draw(*menuWindow);
 
             // Check for button clicks
-            if (playButton.IsPressed(*menuWindow))
+            if (playButton.GetIsPressed(*menuWindow))
             {
                 menuMusic.StopMusic();
                 startSound.PlaySound("assets/sounds/startSound.wav");
                 SetStartFunction(menuWindow);
             }
-            if (optionsButton.IsPressed(*menuWindow))
+            if (optionsButton.GetIsPressed(*menuWindow))
             {
                 controlsSound.PlaySound("assets/sounds/controlsSound.wav");
                 SetControlsFunction();
                 inWindow = true; // Set the flag to true when controls button is pressed
             }
-            if (exitButton.IsPressed(*menuWindow))
+            if (exitButton.GetIsPressed(*menuWindow))
             {
                 menuWindow->close();
                 SetExitFunction();
             }
-            if (title.IsPressed(*menuWindow))
+            if (title.GetIsPressed(*menuWindow))
             {
 
                 titleSound.PlaySound("assets/sounds/titleSound.wav");
@@ -121,7 +121,7 @@ public:
                 Button backButton(sf::Vector2f(250, 70), sf::Vector2f(500, 140), &backButtonTexture);
                 backButton.Draw(*menuWindow);
 
-                if (backButton.IsPressed(*menuWindow))
+                if (backButton.GetIsPressed(*menuWindow))
                 {
                     controlsSound.PlaySound("assets/sounds/controlsSound.wav");
                     inWindow = false; // Set the flag to false when back button is pressed

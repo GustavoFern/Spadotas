@@ -119,7 +119,7 @@ class Button{
     + ~Button()
     + Draw(window: sf::RenderWindow): void
     + Update(deltaTime: float): void
-    + IsPressed(window: sf::RenderWindow): bool
+    + GetIsPressed(window: sf::RenderWindow): bool
 }
 class ContactListener{
     - player1OnGround: bool
@@ -129,9 +129,9 @@ class ContactListener{
     + ContactListener()
     + BeginContact(contact: b2Contact): void
     + EndContact(contact: b2Contact): void
-    + IsPlayer1OnGround() const: bool
-    + IsPlayer2OnGround() const: bool
-    + ArePlayersInContact() const: bool
+    + GetIsPlayer1OnGround() const: bool
+    + GetIsPlayer2OnGround() const: bool
+    + GetArePlayersInContact() const: bool
 }
 
 class sf::RenderWindow {}

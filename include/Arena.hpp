@@ -166,7 +166,7 @@ void Arena::ProcessEvents()
             b2Vec2(0.5f, 0), // Fuerza que se aplica
             player1.GetBody()->GetWorldCenter(),
             true);
-    if (contactListener.IsPlayer1OnGround())
+    if (contactListener.GetIsPlayer1OnGround())
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) // El evento al que responde
             player1.GetBody()->ApplyLinearImpulse(
@@ -233,7 +233,7 @@ void Arena::ProcessEvents()
             player2.GetBody()->GetWorldCenter(),
             true);
 
-    if (contactListener.IsPlayer2OnGround())
+    if (contactListener.GetIsPlayer2OnGround())
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // El evento al que responde
             player2.GetBody()->ApplyLinearImpulse(
@@ -243,7 +243,7 @@ void Arena::ProcessEvents()
     }
 
     //! Respawn de los jugadores o choque de espadas
-    if (contactListener.ArePlayersInContact() && player2.GetDashState() && player1.GetDashState())
+    if (contactListener.GetArePlayersInContact() && player2.GetDashState() && player1.GetDashState())
     {
         // Si ambos jugadores están dashing hacia el otro, aplicar un impulso para separarlos
         if ((velocity2.x > 0.0f && velocity1.x < 0.0f) || (velocity2.x < 0.0f && velocity1.x > 0.0f))
@@ -261,13 +261,13 @@ void Arena::ProcessEvents()
     }
     else
     {
-        if (contactListener.ArePlayersInContact() && player1.GetDashState())
+        if (contactListener.GetArePlayersInContact() && player1.GetDashState())
         {
             player2.Reset(world, 200.0f, 100.0f, 50.0f, 50.0f, &player2TextureRunIdle, &player2TextureJumpDash);
             player2.GetBody()->GetUserData().pointer = static_cast<uintptr_t>(3); // Identificador del jugador 2
         }
 
-        if (contactListener.ArePlayersInContact() && player2.GetDashState())
+        if (contactListener.GetArePlayersInContact() && player2.GetDashState())
         {
             player1.Reset(world, 1000.0f, 100.0f, 50.0f, 50.0f, &player1TextureRunIdle, &player1TextureJumpDash);
             player1.GetBody()->GetUserData().pointer = static_cast<uintptr_t>(1); // Identificador del jugador 2

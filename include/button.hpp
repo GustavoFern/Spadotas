@@ -16,7 +16,7 @@ public:
 
     void Draw(sf::RenderWindow &window);      // Draws the button on the specified window
     void Update(float deltaTime);             // Updates the button logic
-    bool IsPressed(sf::RenderWindow &window); // Checks if the button is pressed
+    bool GetIsPressed(sf::RenderWindow &window); // Checks if the button is pressed
 };
 
 Button::Button(sf::Vector2f size, sf::Vector2f position, sf::Texture *texture)
@@ -38,7 +38,7 @@ void Button::Update(float deltaTime)
 {
 }
 
-bool Button::IsPressed(sf::RenderWindow &window)
+bool Button::GetIsPressed(sf::RenderWindow &window)
 {
     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);                                           // Get the current mouse position relative to the window
     sf::Vector2f mousePositionF(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)); // Convert the mouse position to float
